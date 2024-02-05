@@ -1,16 +1,9 @@
--- Add your sql here
-
 SELECT
- customers.customer_name AS Customer,
- PRINTF('$%.2f', SUM(subscriptions.price_per_month * subscriptions.subscription_length)) AS Amount_Due
-FROM
- orders
-JOIN
- customers ON orders.customer_id = customers.customer_id
-JOIN
- subscriptions ON orders.subscription_id = subscriptions.subscription_id
-WHERE
- orders.order_status = 'unpaid'
- AND subscriptions.description = 'Fashion Magazine'
-GROUP BY
- customers.customer_name;
+  c.customer_name AS "Customer",
+  printf("%.2f", SUM(s.price_per_month * s.subscription_length)) AS "Amount Due"
+FROM orders o
+JOIN customers c ON o.customer_id = c.customer_id
+JOIN subscriptions s ON o.subscription_id = s.subscription_id
+WHERE o.order_status = 'unpaid'
+  AND s.description = 'Fashion Magazine'
+GROUP BY c.customer_name;
